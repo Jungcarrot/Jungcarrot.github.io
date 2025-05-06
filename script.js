@@ -6,6 +6,9 @@ function showCalculator(type) {
       break;
     case 'attack':
       area.innerHTML = '<h2>⚔️ 공격력 계산기</h2><p>계산 로직을 여기에 구현하세요.</p>';
+      import('./attack.js').then(module => {
+    module.loadAttackCalculator();
+    });
       break;
     case 'altar':
       area.innerHTML = '<h2>🛕 신단 레벨업 계산기</h2><p>계산 로직을 여기에 구현하세요.</p>';
