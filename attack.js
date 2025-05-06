@@ -13,13 +13,13 @@ export function loadAttackCalculator() {
   const weapons = ["검", "활", "총", "창", "망치"];
   const container = document.getElementById("weaponInputs");
   weapons.forEach(weapon => {
-    container.innerHTML += `
-      <div style="margin: 0.5rem 0;">
-        <label>${weapon} 레벨: <input type="number" id="${weapon}_level" value="10"></label>
-        <label>${weapon} 스킨 버프(%): <input type="number" id="${weapon}_buff" value="20"></label>
-      </div>
-    `;
-  });
+  container.innerHTML += `
+    <div class="weapon-row">
+      <label>${weapon} 레벨: <input type="number" id="${weapon}_level" value="10"></label>
+      <label>${weapon} 스킨 버프(%): <input type="number" id="${weapon}_buff" value="20"></label>
+    </div>
+  `;
+});
 }
 
 window.calculateAttack = function () {
