@@ -1,59 +1,64 @@
 import { TraitCalculator } from './calculator/TraitCalculator.js';
-import { TraitInputHandler } from './input/TraitInputHandler.js';
-import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 
+const traitList = [
+  { key: 'autoFishing', name: '자동낚시', max: 6 },
+  { key: 'holder', name: '낚시게이지 홀더', max: 2 },
+  { key: 'Overlapping', name: '고물중첩', max: 14 },
+  { key: 'combo', name: '콤보강화', max: 10 },
+  { key: 'detector', name: '탐지기강화', max: 10 },
+  { key: 'storage', name: '보관함증가', max: 14 },
+  { key: 'Auto', name: '자동항해', max: 5 },
+  { key: 'Teleport', name: '순간이동', max: 10 },
+  { key: 'FishingSpeed', name: '스킬강화 낚시속도', max: 10 },
+  { key: 'MoveSpeed', name: '스킬강화 이동속도', max: 10 },
+  { key: 'WorldSpeed', name: '스킬강화 세계가속', max: 10 },
+  { key: 'SkillAuto', name: '스킬 자동 시전', max: 1 },
+  { key: 'SkillBooster', name: '스킬 부스터', max: 11 },
+];
+
 export function loadTraitPage(container) {
-  container.innerHTML = `
-    <h2>✨ 특성 포인트 계산기</h2>
+  container.innerHTML = `<h2>✨ 특성 포인트 계산기</h2>`;
 
-    <div class="input-group">
-      <label>특성 선택:</label>
-      <select id="traitSelect">
-        <option value="autoFishing">자동낚시</option>
-        <option value="holder">고물중첩</option>
-        <option value="combo">콤보강화</option>
-        <option value="detector">탐지기강화</option>
-        <option value="storage">보관함증가</option>
-        <option value="warp">순간이동</option>
-        <option value="skillSpeed">낚시속도</option>
-        <option value="worldSpeed">세계가속</option>
-        <option value="autoCast">스킬자동시전</option>
-        <option value="booster">스킬부스터</option>
-        <option value="skillPower">스킬강화</option>
-        <option value="critical">치명타</option>
-        <option value="agility">이동속도</option>
-      </select>
-    </div>
-    <div class="input-group">
-      <label>현재 레벨:</label>
-      <input type="number" id="traitCurrentLevel">
-    </div>
-    <div class="input-group">
-      <label>목표 레벨:</label>
-      <input type="number" id="traitTargetLevel">
-    </div>
+  const form = document.createElement('div');
 
-    <button class="calculate" id="calculateTrait">계산하기</button>
-    <div id="traitResult"></div>
-  `;
+  traitList.forEach(trait => {
+    form.innerHTML += `
+      <div class="input-group">
+        <label>${trait.name} (최대 ${trait.max}):</label>
+        <input type="number" id="trait_${trait.key}" min="0" max="${trait.max}" value="0">
+      </div>
+    `;
+  });
+
+  form.innerHTML += `<button class="calculate" id="calculateTrait">계산하기</button>
+                     <div id="traitResult" style="margin-top:1rem;"></div>`;
+
+  container.appendChild(form);
 
   document.getElementById('calculateTrait').addEventListener('click', () => {
-    const handler = new TraitInputHandler('traitSelect', 'traitCurrentLevel', 'traitTargetLevel');
-    const { traitName, currentLevel, targetLevel } = handler.getInput();
+    const inputLevels = {};
+    const maxLevels = {};
 
-    const max = TraitInputHandler.getMaxLevel(traitName);
+    traitList.forEach(trait => {
+      const input = document.getElementById(`trait_${trait.key}`);
+      const level = Math.min(parseInt(input.value) || 0, trait.max);
+      inputLevels[trait.key] = level;
+      maxLevels[trait.key] = trait.max;
+    });
 
-    if (!InputValidator.isValidLevel(currentLevel, 0, max)) return;
-    if (!InputValidator.isValidLevel(targetLevel, 1, max)) return;
-    if (targetLevel <= currentLevel) {
-      alert('목표 레벨은 현재 레벨보다 높아야 합니다.');
-      return;
+    const calculator = new TraitCalculator(inputLevels, maxLevels);
+    const each = calculator.calculateEach();
+    const total = calculator.calculateTotal();
+
+    const resultArea = document.getElementById('traitResult');
+    resultArea.innerHTML = '';
+
+    for (const trait of traitList) {
+      resultArea.innerHTML += `<div>${trait.name}: 현재 ${inputLevels[trait.key]} → 필요 포인트 ${each[trait.key]}</div>`;
     }
 
-    const calc = new TraitCalculator(currentLevel, targetLevel);
-    const result = calc.calculate();
-
-    ResultDisplayer.show('traitResult', `필요한 포인트 수: ${result}개`);
+    resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total}</strong></div>`;
   });
 }
+
