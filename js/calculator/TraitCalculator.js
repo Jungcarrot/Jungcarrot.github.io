@@ -1,14 +1,28 @@
 export class TraitCalculator {
-  constructor(currentLevel, targetLevel) {
-    this.currentLevel = currentLevel;
-    this.targetLevel = targetLevel;
+  constructor(traitLevels, traitMaxLevels) {
+    this.traitLevels = traitLevels;       // { traitName: currentLevel, ... }
+    this.traitMaxLevels = traitMaxLevels; // { traitName: maxLevel, ... }
   }
 
-  calculate() {
-    let total = 0;
-    for (let i = this.currentLevel; i < this.targetLevel; i++) {
-      total += i + 1;
+  // 각 특성의 필요 포인트 계산
+  calculateEach() {
+    const result = {};
+    for (const trait in this.traitLevels) {
+      const current = this.traitLevels[trait];
+      const max = this.traitMaxLevels[trait];
+
+      let total = 0;
+      for (let i = current; i < max; i++) {
+        total += i + 1;
+      }
+      result[trait] = total;
     }
-    return total;
+    return result;
+  }
+
+  // 전체 특성 합산
+  calculateTotal() {
+    const each = this.calculateEach();
+    return Object.values(each).reduce((sum, val) => sum + val, 0);
   }
 }
