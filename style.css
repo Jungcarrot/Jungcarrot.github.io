@@ -1,16 +1,28 @@
-// style.css
+/* 전체 페이지 스타일 */
 body {
   font-family: 'Arial', sans-serif;
   background-color: #fdfdfd;
   margin: 0;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
   text-align: center;
 }
 
+/* 상단 헤더 */
 header {
   background-color: #4f9bd9;
   color: white;
   padding: 1rem 0;
+  width: 100%;
+}
+
+/* 네비게이션 버튼 */
+nav {
+  margin-top: 0.5rem;
 }
 
 nav button {
@@ -23,16 +35,37 @@ nav button {
   border-radius: 5px;
 }
 
+/* 메인 콘텐츠 영역 */
 main {
+  width: 100%;
+  max-width: 600px;
   margin-top: 2rem;
 }
 
-input, select {
-  margin: 0.3rem;
+/* 입력 필드 및 그룹 */
+.input-group {
+  margin-bottom: 0.8rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.input-group label {
+  display: inline-block;
+  width: 200px;
+  text-align: right;
+  margin-right: 0.5rem;
+}
+
+.input-group input[type="number"] {
+  width: 100px;
   padding: 0.4rem;
   font-size: 1rem;
 }
 
+/* 계산 버튼 */
 button.calculate {
   margin-top: 1rem;
   padding: 0.5rem 1.5rem;
@@ -44,27 +77,25 @@ button.calculate {
   cursor: pointer;
 }
 
-#content div {
+/* 결과 출력 영역 */
+#content div,
+#attackResult,
+#farmResult,
+#shrineResult,
+#traitResult {
   margin-top: 1rem;
   font-weight: bold;
+  text-align: center;
 }
 
-/* 페이지 구분선 */
+/* 구분선과 제목 스타일 */
 h2 {
   color: #333;
   margin-bottom: 1rem;
 }
 
-/* 입력 그룹 정렬 */
-.input-group {
-  margin-bottom: 0.8rem;
-}
-.input-group label {
-  display: inline-block;
-  width: 160px;
-  text-align: right;
-  margin-right: 1rem;
-}
-.input-group input[type="number"] {
-  width: 100px;
+hr {
+  margin: 1rem 0;
+  border: 0;
+  border-top: 1px solid #ccc;
 }
