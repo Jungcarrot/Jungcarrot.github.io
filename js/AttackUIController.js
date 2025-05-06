@@ -1,3 +1,4 @@
+// AttackUIController.js
 import { AttackCalculator } from './calculator/AttackCalculator.js';
 import { CharacterInputHandler } from './input/CharacterInputHandler.js';
 import { PetInputHandler } from './input/PetInputHandler.js';
@@ -42,6 +43,10 @@ export class AttackUIController {
         <label>마법석 레벨 / 스킨(%):</label>
         <input type="number" id="magicLevel"> / <input type="number" id="magicSkin">
       </div>
+      <div class="input-group">
+        <label>의지의 신단 레벨 (0~255):</label>
+        <input type="number" id="willShrineLevel" min="0" max="255">
+      </div>
       <button class="calculate" id="calculateAttack">계산하기</button>
       <div id="attackResult"></div>
     `;
@@ -68,13 +73,17 @@ export class AttackUIController {
       const plv = pet.getValue();
       const wlv = weapons.getValues();
       const sbf = skins.getValues();
+      const shrineLevel = parseInt(document.getElementById('willShrineLevel').value) || 0;
 
       if (!InputValidator.isValidLevel(clv, 1, 4181)) return;
       if (!InputValidator.isValidLevel(plv, 0, 4177)) return;
+      if (!InputValidator.isValidLevel(shrineLevel, 0, 255)) return;
 
-      const calc = new AttackCalculator(clv, plv, wlv, sbf);
+      const calc = new AttackCalculator(clv, plv, wlv, sbf, shrineLevel);
       const result = calc.calculate();
       ResultDisplayer.show('attackResult', `총 공격력: ${result.toFixed(2)}`);
     });
   }
 }
+
+
