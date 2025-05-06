@@ -1,9 +1,10 @@
 export class AttackCalculator {
-  constructor(charLevel, petLevel, weaponLevels, skinBuffs) {
+  constructor(charLevel, petLevel, weaponLevels, skinBuffs, shrineLevel = 0) {
     this.charLevel = charLevel;
     this.petLevel = petLevel;
-    this.weaponLevels = weaponLevels; // { rod: 10, cannon: 5, ... }
-    this.skinBuffs = skinBuffs;       // { rod: 10, cannon: 5, ... } (percent)
+    this.weaponLevels = weaponLevels; // { rod: 1, cannon: 2, ... }
+    this.skinBuffs = skinBuffs;       // { rod: 10, cannon: 5, ... }
+    this.shrineLevel = shrineLevel;   // 0~255
   }
 
   calculate() {
@@ -11,13 +12,16 @@ export class AttackCalculator {
     const petBonus = this.petLevel * 2;
 
     let weaponTotal = 0;
-    for (const type in this.weaponLevels) {
-      const level = this.weaponLevels[type];
-      const buff = this.skinBuffs[type] || 0;
-      weaponTotal += level * (1 + buff / 100);
+    for (const key in this.weaponLevels) {
+      const level = this.weaponLevels[key];
+      const buff = this.skinBuffs[key] || 0;
+      const weaponBase = level * 3; // 예시: 무기 레벨 * 3
+      const buffed = weaponBase * (1 + buff / 100);
+      weaponTotal += buffed;
     }
 
-    return base + petBonus + weaponTotal;
+    const shrineBonus = base * (this.shrineLevel * 0.005); // 0.5% per level
+
+    return base + petBonus + weaponTotal + shrineBonus;
   }
 }
-
