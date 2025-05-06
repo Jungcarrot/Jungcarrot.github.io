@@ -1,0 +1,70 @@
+// style.css
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #fdfdfd;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+header {
+  background-color: #4f9bd9;
+  color: white;
+  padding: 1rem 0;
+}
+
+nav button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  border: none;
+  background-color: #e0e0e0;
+  border-radius: 5px;
+}
+
+main {
+  margin-top: 2rem;
+}
+
+input, select {
+  margin: 0.3rem;
+  padding: 0.4rem;
+  font-size: 1rem;
+}
+
+button.calculate {
+  margin-top: 1rem;
+  padding: 0.5rem 1.5rem;
+  background-color: #4f9bd9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+#content div {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+/* 페이지 구분선 */
+h2 {
+  color: #333;
+  margin-bottom: 1rem;
+}
+
+/* 입력 그룹 정렬 */
+.input-group {
+  margin-bottom: 0.8rem;
+}
+.input-group label {
+  display: inline-block;
+  width: 160px;
+  text-align: right;
+  margin-right: 1rem;
+}
+.input-group input[type="number"] {
+  width: 100px;
+}
