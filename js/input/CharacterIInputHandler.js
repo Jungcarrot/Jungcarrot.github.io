@@ -1,9 +1,8 @@
 export class CharacterInputHandler {
-  constructor(inputId) {
-    this.input = document.getElementById(inputId);
+  constructor(id) {
+    this.input = document.getElementById(id);
   }
-
-  getLevel() {
-    return parseInt(this.input.value);
+  getValue() {
+    return parseInt(this.input.value) || 0;
   }
 }
