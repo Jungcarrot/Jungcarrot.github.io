@@ -36,23 +36,3 @@ header {
   margin-top: 2rem;
   padding: 2rem;
 }
-
-.weapon-row {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-  margin-bottom: 0.5rem;
-}
-
-.weapon-row label {
-  width: 180px;
-  display: inline-block;
-}
-
-.weapon-row input {
-  width: 100px;
-  height: 32px;
-  font-size: 15px;
-  padding: 4px 8px;
-}
-
