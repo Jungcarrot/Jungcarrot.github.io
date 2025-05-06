@@ -5,7 +5,7 @@ function showCalculator(type) {
       area.innerHTML = '<h2>🌾 농장 레벨업 계산기</h2><p>계산 로직을 여기에 구현하세요.</p>';
       break;
     case 'attack':
-      area.innerHTML = '<h2>⚔️ 공격력 계산기</h2><p>계산 로직을 여기에 구현하세요.</p>';
+      area.innerHTML = '<h2>⚔️ 공격력 계산기</h2><p>;
       import('./attack.js').then(module => {
     module.loadAttackCalculator();
     });
