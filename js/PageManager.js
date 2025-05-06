@@ -1,4 +1,5 @@
 import { loadAttackPage } from './AttackUIController.js';
+import { loadFarmPage } from './FarmUIController.js';
 
 export class PageManager {
   constructor(containerId) {
