@@ -10,5 +10,12 @@ window.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+    const homeBtn = document.getElementById('homeButton');
+  if (homeBtn) {
+    homeBtn.addEventListener('click', () => {
+      manager.loadPage('home');
+    });
+  }
+
   manager.loadPage('home');
 });
