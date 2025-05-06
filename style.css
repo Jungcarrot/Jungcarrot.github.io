@@ -7,49 +7,23 @@ body {
 }
 
 header {
-  background-color: #4f9dbc;
-  padding: 1rem;
+  background-color: #4f9bd9;
   color: white;
+  padding: 1rem 0;
 }
 
-.menu {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  margin-top: 2rem;
-}
-
-.menu button {
-  padding: 1rem;
-  border: none;
-  background-color: #87c5d6;
-  border-radius: 8px;
+nav button {
+  margin: 0.5rem;
+  padding: 0.5rem 1rem;
   font-size: 1rem;
   cursor: pointer;
 }
 
-.menu button:hover {
-  background-color: #5eb0c5;
-}
-
-#calculator-area {
+main {
   margin-top: 2rem;
-  padding: 2rem;
 }
-
-.calculate-button {
-  padding: 1rem 2rem;
-  font-size: 1.2rem;
-  background-color: #4caf50;
-  color: white;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  margin-top: 1.5rem;
-  transition: background-color 0.3s ease;
-}
-
-.calculate-button:hover {
-  background-color: #45a049;
+input {
+  margin: 0.3rem;
+  padding: 0.4rem;
 }
 
