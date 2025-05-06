@@ -1,5 +1,6 @@
 import { loadAttackPage } from './AttackUIController.js';
 import { loadFarmPage } from './FarmUIController.js';
+import { loadShrinePage } from './ShrineUIController.js';
 
 export class PageManager {
   constructor(containerId) {
