@@ -10,9 +10,6 @@ export class PageManager {
 
   loadPage(page) {
     switch (page) {
-      case 'home':
-        this.container.innerHTML = `<h2>계산기를 선택해주세요.</h2>`;
-        break;
       case 'attack':
         loadAttackPage(this.container);
         break;
