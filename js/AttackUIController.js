@@ -86,4 +86,7 @@ export class AttackUIController {
   }
 }
 
-
+export function loadAttackPage(container) {
+  const ui = new AttackUIController(container.id);
+  ui.render();
+}
