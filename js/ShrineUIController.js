@@ -5,7 +5,7 @@ import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 
 export function loadShrinePage(container) {
   container.innerHTML = `
-    <h2>⛩️ 신단 레벨 계산기</h2>
+    <h2>신단 레벨 계산기</h2>
 
     <div class="input-group">
       <label>신단 종류:</label>
