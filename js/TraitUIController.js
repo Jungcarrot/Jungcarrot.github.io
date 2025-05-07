@@ -18,7 +18,7 @@ const traitList = [
 ];
 
 export function loadTraitPage(container) {
-  container.innerHTML = `<h2>✨ 특성 포인트 계산기</h2>`;
+  container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
   const form = document.createElement('div');
 
