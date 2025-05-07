@@ -14,7 +14,7 @@ export class AttackUIController {
 
   render() {
     this.container.innerHTML = `
-      <h2>⚔️ 공격력 계산기</h2>
+      <h2>공격력 계산기</h2>
       <div class="input-group">
         <label>캐릭터 레벨:</label>
         <input type="number" id="charLevel" min="1" max="4181">
