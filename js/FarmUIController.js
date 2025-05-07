@@ -5,7 +5,7 @@ import { FarmLevelInputHandler } from './input/FarmLevelInputHandler.js';
 
 export function loadFarmPage(container) {
   container.innerHTML = `
-    <h2>🌾 농장 스킨 레벨 계산기</h2>
+    <h2>농장 스킨 레벨 계산기</h2>
 
     <div class="input-group">
       <label>현재 스킨 레벨 (0~9):</label>
