@@ -20,12 +20,28 @@ const traitList = [
 export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
-  // JSON 데이터 불러오기
+  // trait_levels.json 불러오기
   const response = await fetch('./data/trait_levels.json');
   const traitData = await response.json();
 
-  const form = document.createElement('div');
+  // 전체 레이아웃: 입력과 결과를 양 옆에 배치
+  const layout = document.createElement('div');
+  layout.style.display = 'flex';
+  layout.style.gap = '2rem';
+  layout.style.justifyContent = 'center';
+  layout.style.alignItems = 'flex-start';
 
+  // 왼쪽 입력 영역
+  const form = document.createElement('div');
+  form.style.flex = '1';
+
+  // 오른쪽 결과 영역
+  const result = document.createElement('div');
+  result.id = 'traitResult';
+  result.style.flex = '1';
+  result.style.textAlign = 'left';
+
+  // 입력 필드 생성
   traitList.forEach(trait => {
     form.innerHTML += `
       <div class="input-group">
@@ -35,11 +51,15 @@ export async function loadTraitPage(container) {
     `;
   });
 
-  form.innerHTML += `<button class="calculate" id="calculateTrait">계산하기</button>
-                     <div id="traitResult" style="margin-top:1rem;"></div>`;
+  // 계산 버튼 추가
+  form.innerHTML += `<button class="calculate" id="calculateTrait">계산하기</button>`;
 
-  container.appendChild(form);
+  // DOM 구성
+  layout.appendChild(form);
+  layout.appendChild(result);
+  container.appendChild(layout);
 
+  // 계산 버튼 이벤트
   document.getElementById('calculateTrait').addEventListener('click', () => {
     const inputLevels = {};
 
