@@ -40,8 +40,8 @@ export async function loadFarmPage(container) {
       <input type="number" id="farmCurrentLevel" min="0" max="9">
     </div>
     <div class="input-group">
-      <label>목표 스킨 레벨 (1~10):</label>
-      <input type="number" id="farmTargetLevel" min="1" max="10">
+      <label>목표 스킨 레벨 (0~9):</label>
+      <input type="number" id="farmTargetLevel" min="0" max="9">
     </div>
 
     <button class="calculate" id="calculateFarm">계산하기</button>
@@ -62,7 +62,7 @@ export async function loadFarmPage(container) {
     const skin = document.getElementById('farmSkin').value;
 
     if (!InputValidator.isValidLevel(current, 0, 9)) return;
-    if (!InputValidator.isValidLevel(target, 1, 10)) return;
+    if (!InputValidator.isValidLevel(target, 0, 9)) return;
     if (target <= current) {
       alert("목표 레벨은 현재 레벨보다 높아야 합니다.");
       return;
