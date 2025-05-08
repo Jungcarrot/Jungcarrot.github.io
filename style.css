@@ -8,7 +8,7 @@ body {
   flex-direction: column;
   align-items: center;
   min-height: 100vh;
-  font-size: 20px;
+  font-size: 24px;
 }
 
 /* 상단 헤더 */
@@ -47,7 +47,7 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: 1.2rem;
 }
 
 .input-group label {
@@ -60,7 +60,7 @@ main {
 .input-group input[type="number"] {
   width: 100px;
   padding: 0.4rem;
-  font-size: 1rem;
+  font-size: 1.2rem;
 }
 
 /* 드롭다운 메뉴 */
@@ -73,12 +73,12 @@ select {
 /* 계산 버튼 */
 button.calculate {
   margin-top: 1rem;
-  padding: 0.5rem 1.5rem;
+  padding: 1.2rem 2.5rem;
   background-color: #4f9bd9;
   color: white;
   border: none;
   border-radius: 5px;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 
