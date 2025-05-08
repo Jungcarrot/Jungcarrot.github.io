@@ -1,4 +1,6 @@
-import { formatNumber } from './js/utils/NumberFormatter.js';
+// calculator/AttackCalculator.js 내부
+import { formatNumber } from '../utils/NumberFormatter.js';
+
 
 export class AttackCalculator {
   constructor(charLevel, petLevel, weaponLevels, skinBuffs, shrineLevel = 0) {
