@@ -1,26 +1,31 @@
 export class TraitCalculator {
-  constructor(traitLevels, traitMaxLevels) {
-    this.traitLevels = traitLevels;       // { traitName: currentLevel, ... }
-    this.traitMaxLevels = traitMaxLevels; // { traitName: maxLevel, ... }
+  constructor(currentLevels, traitData) {
+    this.currentLevels = currentLevels; // { traitName: currentLevel, ... }
+    this.traitData = traitData;         // JSON에서 불러온 { traitName: [강화비용 배열] }
   }
 
-  // 각 특성의 필요 포인트 계산
+  // 각 특성별 필요 포인트 계산
   calculateEach() {
     const result = {};
-    for (const trait in this.traitLevels) {
-      const current = this.traitLevels[trait];
-      const max = this.traitMaxLevels[trait];
+    for (const trait in this.currentLevels) {
+      const current = this.currentLevels[trait];
+      const costTable = this.traitData[trait];
+
+      if (!costTable) {
+        result[trait] = 0;
+        continue;
+      }
 
       let total = 0;
-      for (let i = current; i < max; i++) {
-        total += i + 1;
+      for (let i = current; i < costTable.length; i++) {
+        total += costTable[i];
       }
       result[trait] = total;
     }
     return result;
   }
 
-  // 전체 특성 합산
+  // 총합 포인트 계산
   calculateTotal() {
     const each = this.calculateEach();
     return Object.values(each).reduce((sum, val) => sum + val, 0);
