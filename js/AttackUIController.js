@@ -6,6 +6,7 @@ import { WeaponInputHandler } from './input/WeaponInputHandler.js';
 import { SkinInputHandler } from './input/SkinInputHandler.js';
 import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
+import { formatNumber } from './utils/NumberFormatter.js'; // ✅ 추가
 
 export class AttackUIController {
   constructor(containerId) {
@@ -80,8 +81,10 @@ export class AttackUIController {
       if (!InputValidator.isValidLevel(shrineLevel, 0, 255)) return;
 
       const calc = new AttackCalculator(clv, plv, wlv, sbf, shrineLevel);
-      const result = calc.calculate();
-      ResultDisplayer.show('attackResult', `총 공격력: ${result.toFixed(2)}`);
+      const raw = calc.calculateRaw();                            // 원본 숫자
+      const formatted = calc.calculateFormatted();                // 축약형
+
+      ResultDisplayer.show('attackResult', `총 공격력: ${formatted} (${raw.toFixed(2)})`);
     });
   }
 }
