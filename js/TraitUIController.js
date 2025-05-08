@@ -76,10 +76,22 @@ export async function loadTraitPage(container) {
     const resultArea = document.getElementById('traitResult');
     resultArea.innerHTML = '';
 
-    for (const trait of traitList) {
-      resultArea.innerHTML += `<div>${trait.name}: 현재 ${inputLevels[trait.key]} → 필요 포인트 ${each[trait.key]}</div>`;
-    }
+for (const trait of traitList) {
+  const name = trait.name;
+  const key = trait.key;
+  const current = inputLevels[key];
+  const required = each[key];
 
-    resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total}</strong></div>`;
+  resultArea.innerHTML += `
+    <div class="trait-row">
+      <span class="trait-label">${name} (최대 ${trait.max}):</span>
+      <input class="trait-inline-input" type="number" disabled value="${current}" />
+      <span class="trait-result">→ 현재 ${current} → 필요 포인트 ${required.toLocaleString()}</span>
+    </div>
+  `;
+}
+
+resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total.toLocaleString()}</strong></div>`;
+
   });
 }
