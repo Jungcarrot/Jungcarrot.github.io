@@ -16,7 +16,7 @@ body {
 /* 상단 헤더 */
 header {
   background-color: #8c9ed9;
-  color: #020715;
+  color: #white;
   padding: 4rem 0;
   width: 100%;
 }
@@ -111,7 +111,7 @@ hr {
 }
 
 .input-group.horizontal label {
-  width: 200px;
+  width: 240px;
   text-align: right;
   font-weight: bold;
 }
