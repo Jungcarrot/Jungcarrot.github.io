@@ -83,7 +83,7 @@ button.calculate {
 #farmResult,
 #shrineResult,
 #traitResult {
-  margin-top: 2rem;
+  margin-top: 1rem;
   font-weight: bold;
   text-align: center;
   white-space: nowrap;
