@@ -21,7 +21,7 @@ export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
   // trait_levels.json 불러오기
-  const response = await fetch('./data/trait_levels.json');
+  const response = await fetch('/js/data/trait_levels.json');
   const traitData = await response.json();
 
   // 전체 레이아웃: 입력과 결과를 양 옆에 배치
