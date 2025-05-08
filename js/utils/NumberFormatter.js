@@ -26,6 +26,6 @@ export function formatNumber(num, decimals = 2) {
   return scaled.toFixed(decimals) + suffix;
 }
 
-export function formatWithCommas(num, decimals = 2) {
+export function formatWithCommas(num, decimals = 5) {
   return Number(num.toFixed(decimals)).toLocaleString();
 }
