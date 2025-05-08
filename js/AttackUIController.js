@@ -81,10 +81,11 @@ export class AttackUIController {
       if (!InputValidator.isValidLevel(shrineLevel, 0, 255)) return;
 
       const calc = new AttackCalculator(clv, plv, wlv, sbf, shrineLevel);
-      const raw = calc.calculateRaw();                            // 원본 숫자
-      const formatted = calc.calculateFormatted();                // 축약형
+      const raw = calc.calculateRaw();
+      const formatted = formatNumber(raw);
+      const commaSeparated = formatWithCommas(raw);
 
-      ResultDisplayer.show('attackResult', `총 공격력: ${formatted} (${raw.toFixed(2)})`);
+      ResultDisplayer.show('attackResult', `총 공격력: ${formatted} (${commaSeparated})`);
     });
   }
 }
