@@ -14,11 +14,15 @@ const traitList = [
   { key: 'MoveSpeed', name: '스킬강화 이동속도', max: 10 },
   { key: 'WorldSpeed', name: '스킬강화 세계가속', max: 10 },
   { key: 'SkillAuto', name: '스킬 자동 시전', max: 1 },
-  { key: 'SkillBooster', name: '스킬 부스터', max: 11 },
+  { key: 'SkillBooster', name: '스킬 부스터', max: 11 }
 ];
 
-export function loadTraitPage(container) {
+export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
+
+  // JSON 데이터 불러오기
+  const response = await fetch('./data/trait_levels.json');
+  const traitData = await response.json();
 
   const form = document.createElement('div');
 
@@ -38,16 +42,14 @@ export function loadTraitPage(container) {
 
   document.getElementById('calculateTrait').addEventListener('click', () => {
     const inputLevels = {};
-    const maxLevels = {};
 
     traitList.forEach(trait => {
       const input = document.getElementById(`trait_${trait.key}`);
       const level = Math.min(parseInt(input.value) || 0, trait.max);
       inputLevels[trait.key] = level;
-      maxLevels[trait.key] = trait.max;
     });
 
-    const calculator = new TraitCalculator(inputLevels, maxLevels);
+    const calculator = new TraitCalculator(inputLevels, traitData);
     const each = calculator.calculateEach();
     const total = calculator.calculateTotal();
 
@@ -61,4 +63,3 @@ export function loadTraitPage(container) {
     resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total}</strong></div>`;
   });
 }
-
