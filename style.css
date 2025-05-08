@@ -69,7 +69,7 @@ main {
 select {
   font-size: 1.3rem;    /* 글씨 크기 키움 */
   padding: 0.6rem 1rem; /* 내부 여백 확대 */
-  width: 300px;         /* 드롭다운 자체 폭 확대 */
+  width: 200px;         /* 드롭다운 자체 폭 확대 */
   height: 50px;         /* 선택창 높이 키움 (옵션) */
   border-radius: 6px;   /* 둥근 모서리 */
 }
