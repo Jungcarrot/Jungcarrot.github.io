@@ -20,26 +20,33 @@ const traitList = [
 export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
-  // ✅ trait_levels.json 불러오기
-  const response = await fetch('/js/data/trait_levels.json'); // 또는 './data/trait_levels.json' 경로 맞게 조정
+  // JSON 불러오기
+  const response = await fetch('/js/data/trait_levels.json');
   const traitData = await response.json();
 
   // 전체 레이아웃
   const layout = document.createElement('div');
+  layout.id = 'trait-layout';
   layout.style.display = 'flex';
-  layout.style.gap = '2rem';
+  layout.style.flexDirection = 'column'; // ✅ 초기 상태: 수직 정렬
+  layout.style.alignItems = 'center';
   layout.style.justifyContent = 'center';
-  layout.style.alignItems = 'flex-start';
+  layout.style.gap = '2rem';
 
-  // 왼쪽 입력 폼
+  // 입력폼
   const form = document.createElement('div');
-  form.style.flex = '1';
+  form.style.display = 'flex';
+  form.style.flexDirection = 'column';
+  form.style.alignItems = 'center';
 
-  // 오른쪽 결과창
+  // 결과창
   const result = document.createElement('div');
   result.id = 'traitResult';
+  result.style.display = 'none'; // ✅ 처음엔 숨김
   result.style.flex = '1';
   result.style.textAlign = 'left';
+  result.style.whiteSpace = 'nowrap';
+  result.style.width = '450px';
 
   // 입력 필드
   traitList.forEach(trait => {
@@ -56,7 +63,7 @@ export async function loadTraitPage(container) {
   layout.appendChild(result);
   container.appendChild(layout);
 
-  // 계산 버튼 이벤트
+  // 계산 버튼 클릭 이벤트
   document.getElementById('calculateTrait').addEventListener('click', () => {
     const inputLevels = {};
 
@@ -70,7 +77,15 @@ export async function loadTraitPage(container) {
     const each = calculator.calculateEach();
     const total = calculator.calculateTotal();
 
+    // ✅ 레이아웃을 좌우 배치로 전환
+    const layout = document.getElementById('trait-layout');
+    layout.style.flexDirection = 'row';
+    layout.style.alignItems = 'flex-start';
+    layout.style.justifyContent = 'center';
+
+    // ✅ 결과창 표시
     const resultArea = document.getElementById('traitResult');
+    resultArea.style.display = 'block';
     resultArea.innerHTML = '';
 
     traitList.forEach(trait => {
@@ -82,3 +97,4 @@ export async function loadTraitPage(container) {
     resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total.toLocaleString()}</strong></div>`;
   });
 }
+
