@@ -6,7 +6,7 @@ import { WeaponInputHandler } from './input/WeaponInputHandler.js';
 import { SkinInputHandler } from './input/SkinInputHandler.js';
 import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
-import { formatNumber } from './utils/NumberFormatter.js'; // ✅ 추가
+import { formatNumber, formatWithCommas } from './utils/NumberFormatter.js';
 
 export class AttackUIController {
   constructor(containerId) {
