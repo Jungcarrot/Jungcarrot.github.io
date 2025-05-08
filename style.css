@@ -55,6 +55,7 @@ main {
   width: 200px;
   text-align: right;
   font-weight: bold;
+  font-size: 1.3rem;
 }
 
 /* 숫자 입력 필드 */
