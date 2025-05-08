@@ -1,4 +1,4 @@
-// calculator/AttackCalculator.js 내부
+
 import { formatNumber } from '../utils/NumberFormatter.js';
 
 
