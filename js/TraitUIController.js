@@ -20,41 +20,38 @@ const traitList = [
 export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
-  // trait_levels.json 불러오기
-  const response = await fetch('/js/data/trait_levels.json');
+  // ✅ trait_levels.json 불러오기
+  const response = await fetch('/js/data/trait_levels.json'); // 또는 './data/trait_levels.json' 경로 맞게 조정
   const traitData = await response.json();
 
-  // 전체 레이아웃: 입력과 결과를 양 옆에 배치
+  // 전체 레이아웃
   const layout = document.createElement('div');
   layout.style.display = 'flex';
   layout.style.gap = '2rem';
   layout.style.justifyContent = 'center';
   layout.style.alignItems = 'flex-start';
 
-  // 왼쪽 입력 영역
+  // 왼쪽 입력 폼
   const form = document.createElement('div');
   form.style.flex = '1';
 
-  // 오른쪽 결과 영역
+  // 오른쪽 결과창
   const result = document.createElement('div');
   result.id = 'traitResult';
   result.style.flex = '1';
   result.style.textAlign = 'left';
 
-  // 입력 필드 생성
+  // 입력 필드
   traitList.forEach(trait => {
     form.innerHTML += `
-      <div class="input-group">
-        <label>${trait.name} (최대 ${trait.max}):</label>
+      <div class="input-group horizontal">
+        <label for="trait_${trait.key}">${trait.name} (최대 ${trait.max}):</label>
         <input type="number" id="trait_${trait.key}" min="0" max="${trait.max}" value="0">
       </div>
     `;
   });
 
-  // 계산 버튼 추가
   form.innerHTML += `<button class="calculate" id="calculateTrait">계산하기</button>`;
-
-  // DOM 구성
   layout.appendChild(form);
   layout.appendChild(result);
   container.appendChild(layout);
@@ -76,22 +73,12 @@ export async function loadTraitPage(container) {
     const resultArea = document.getElementById('traitResult');
     resultArea.innerHTML = '';
 
-  for (const trait of traitList) {
-    const name = trait.name;
-    const key = trait.key;
-    const current = inputLevels[key];
-    const required = each[key];
+    traitList.forEach(trait => {
+      const current = inputLevels[trait.key];
+      const required = each[trait.key];
+      resultArea.innerHTML += `<div>${trait.name}: 현재 ${current} → 필요 포인트 ${required.toLocaleString()}</div>`;
+    });
 
-    resultArea.innerHTML += `
-      <div class="trait-row">
-        <span class="trait-label">${name} (최대 ${trait.max}):</span>
-        <input class="trait-inline-input" type="number" disabled value="${current}" />
-        <span class="trait-result">→ 현재 ${current} → 필요 포인트 ${required.toLocaleString()}</span>
-      </div>
-    `;
-  }
-
-  resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total.toLocaleString()}</strong></div>`;
-
+    resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total.toLocaleString()}</strong></div>`;
   });
 }
