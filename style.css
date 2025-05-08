@@ -10,6 +10,7 @@ body {
   justify-content: flex-start;
   min-height: 100vh;
   text-align: center;
+  font-size: 18px;
 }
 
 /* 상단 헤더 */
