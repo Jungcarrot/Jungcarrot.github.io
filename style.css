@@ -105,6 +105,7 @@ hr {
   align-items: center;
   margin-bottom: 0.5rem;
   gap: 1rem;
+  flex-wrap: nowrap;
 }
 
 .input-group.horizontal label {
