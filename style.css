@@ -83,9 +83,10 @@ button.calculate {
 #farmResult,
 #shrineResult,
 #traitResult {
-  margin-top: 1rem;
-  font-weight: bold;
-  text-align: center;
+  white-space: nowrap;
+  overflow-x: auto;
+  text-align: left;
+  max-width: 100%;
 }
 
 /* 구분선과 제목 스타일 */
