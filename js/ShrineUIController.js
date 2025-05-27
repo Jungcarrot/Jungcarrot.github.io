@@ -77,8 +77,8 @@ export function loadShrinePage(container) {
 
     const max = shrineMaxLevels[shrineType] || 255;
 
-    if (!InputValidator.isValidLevel(currentLevel, 0, max)) return;
-    if (!InputValidator.isValidLevel(targetLevel, 1, max)) return;
+    if (!InputValidator.isValidLevel(currentLevel, 0, max, '현재 레벨')) return;
+    if (!InputValidator.isValidLevel(targetLevel, 1, max, '목표 레벨')) return;
     if (targetLevel <= currentLevel) {
       alert('목표 레벨은 현재 레벨보다 높아야 합니다.');
       return;
