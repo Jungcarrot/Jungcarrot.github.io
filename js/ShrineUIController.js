@@ -6,7 +6,7 @@ import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 // shrineData.json 로딩 함수
 async function loadShrineData() {
   try {
-    const response = await fetch('./js/Data/shrineData.json');
+    const response = await fetch('./js/data/shrineData.json');
     if (!response.ok) {
       throw new Error(`HTTP 오류 상태: ${response.status}`);
     }
