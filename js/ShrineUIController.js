@@ -6,9 +6,9 @@ export function loadShrinePage(container) {
       <label>신단 종류:</label>
       <select id="shrineType">
         <option value="growth">성장의 신단</option>
-        <option value="rich">풍요의 신단</option>
-        <option value="strike">강타의 신단</option>
-        <option value="sharp">예리의 신단</option>
+        <option value="abundance">풍요의 신단</option>
+        <option value="heavyblow">강타의 신단</option>
+        <option value="sharpness">예리의 신단</option>
         <option value="will">의지의 신단</option>
       </select>
     </div>
@@ -26,10 +26,10 @@ export function loadShrinePage(container) {
   `;
 
   const shrineMaxLevels = {
-    growth: 215,
-    rich: 190,
-    strike: 255,
-    sharp: 255,
+    growth: 120,
+    abundance: 150,
+    heavyblow: 180,
+    sharpness: 200,
     will: 255
   };
 
