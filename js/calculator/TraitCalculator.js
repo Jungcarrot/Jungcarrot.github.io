@@ -1,7 +1,7 @@
 export class TraitCalculator {
   constructor(currentLevels, traitData) {
-    this.currentLevels = currentLevels; // { traitName: currentLevel, ... }
-    this.traitData = traitData;         // JSON에서 불러온 { traitName: [강화비용 배열] }
+    this.currentLevels = currentLevels;
+    this.traitData = traitData;
   }
 
   // 각 특성별 필요 포인트 계산
