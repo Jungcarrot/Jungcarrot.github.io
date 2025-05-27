@@ -4,9 +4,9 @@ export class AttackCalculator {
   constructor(charLevel, petLevel, weaponLevels, skinBuffs, shrineLevel = 0) {
     this.charLevel = charLevel;
     this.petLevel = petLevel;
-    this.weaponLevels = weaponLevels; // { rod: 1, cannon: 2, ... }
-    this.skinBuffs = skinBuffs;       // { rod: 10, cannon: 5, ... }
-    this.shrineLevel = shrineLevel;   // 0~255
+    this.weaponLevels = weaponLevels;
+    this.skinBuffs = skinBuffs;
+    this.shrineLevel = shrineLevel;
   }
 
   calculateRaw() {
@@ -27,19 +27,19 @@ export class AttackCalculator {
       magic: 0.016
     };
 
-    // 1. base_dps
+    // base_dps
     const baseDps = 30 * this.charLevel * Math.pow(1.01, this.charLevel);
 
-    // 2. 펫 계수
+    // 펫 계수
     const petMult = 0.0001 * this.petLevel;
 
-    // 3. 의지 신단 계수 (간단화된 pow형)
+    // 의지 신단 계수 (간단화된 pow형)
     const altarMult = 0.00001 * this.shrineLevel;
 
-    // 4. base_tap_dps
+    // base_tap_dps
     const baseTapDps = baseDps * (1 + petMult) * (1 + altarMult);
 
-    // 5. 무기 DPS 계산
+    // 무기 DPS 계산
     let weaponTotal = 0;
     for (const weapon in this.weaponLevels) {
       const level = this.weaponLevels[weapon] || 0;
@@ -51,7 +51,7 @@ export class AttackCalculator {
       weaponTotal += weaponDps;
     }
 
-    // 6. 총 tap_dps
+    // 총 tap_dps
     const tapDps = baseTapDps + weaponTotal;
 
     // 7. 애니메이션 보정 적용 (96%)
