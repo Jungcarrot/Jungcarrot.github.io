@@ -3,10 +3,10 @@ import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 
-// ✅ shrineData.json을 fetch로 불러오는 함수
+// shrineData.json 로딩 함수
 async function loadShrineData() {
   try {
-    const response = await fetch('./js/Data/shrineData.json'); // 실제 경로에 맞게 조정
+    const response = await fetch('./js/Data/shrineData.json');
     if (!response.ok) {
       throw new Error(`HTTP 오류 상태: ${response.status}`);
     }
@@ -45,11 +45,12 @@ export function loadShrinePage(container) {
     <div id="shrineResult"></div>
   `;
 
+  // ✅ 신단별 최고 레벨
   const shrineMaxLevels = {
-    growth: 120,
-    abundance: 150,
-    heavyblow: 180,
-    sharpness: 200,
+    growth: 215,
+    abundance: 190,
+    heavyblow: 255,
+    sharpness: 255,
     will: 255
   };
 
