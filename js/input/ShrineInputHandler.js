@@ -15,9 +15,9 @@ export class ShrineInputHandler {
   static getMaxLevel(shrineType) {
     switch (shrineType) {
       case 'growth': return 215;
-      case 'rich': return 190;
-      case 'strike':
-      case 'sharp':
+      case 'abundance': return 190;
+      case 'heavyblow': return 255;
+      case 'sharpness': return 255;
       case 'will': return 255;
       default: return 0;
     }
