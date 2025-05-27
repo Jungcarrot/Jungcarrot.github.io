@@ -90,6 +90,6 @@ export function loadShrinePage(container) {
     const calc = new ShrineCalculator(currentLevel, targetLevel, shrineType, shrineData);
     const result = calc.calculate();
 
-    ResultDisplayer.show('shrineResult', `필요한 호박석: ${result}개`);
+    ResultDisplayer.show('shrineResult', `필요한 호박석: ${result.toLocaleString()}개`);
   });
 }
