@@ -3,6 +3,21 @@ import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 
+// ✅ shrineData.json을 fetch로 불러오는 함수
+async function loadShrineData() {
+  try {
+    const response = await fetch('./js/Data/shrineData.json'); // 실제 경로에 맞게 조정
+    if (!response.ok) {
+      throw new Error(`HTTP 오류 상태: ${response.status}`);
+    }
+    return await response.json();
+  } catch (error) {
+    console.error('shrineData.json 로드 실패:', error);
+    alert('신단 데이터를 불러오는 데 실패했습니다. 다시 시도하거나 관리자에게 문의하세요.');
+    return null;
+  }
+}
+
 export function loadShrinePage(container) {
   container.innerHTML = `
     <h2>신단 레벨 계산기</h2>
@@ -38,7 +53,6 @@ export function loadShrinePage(container) {
     will: 255
   };
 
-
   const shrineTypeSelect = document.getElementById('shrineType');
   const currentInput = document.getElementById('shrineCurrentLevel');
   const targetInput = document.getElementById('shrineTargetLevel');
@@ -54,7 +68,7 @@ export function loadShrinePage(container) {
   }
 
   shrineTypeSelect.addEventListener('change', updateMaxLevel);
-  updateMaxLevel(); // 최초 1회 실행
+  updateMaxLevel();
 
   document.getElementById('calculateShrine').addEventListener('click', async () => {
     const handler = new ShrineInputHandler('shrineType', 'shrineCurrentLevel', 'shrineTargetLevel');
@@ -70,6 +84,8 @@ export function loadShrinePage(container) {
     }
 
     const shrineData = await loadShrineData();
+    if (!shrineData) return;
+
     const calc = new ShrineCalculator(currentLevel, targetLevel, shrineType, shrineData);
     const result = calc.calculate();
 
