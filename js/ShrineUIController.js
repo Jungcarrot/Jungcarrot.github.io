@@ -2,6 +2,7 @@ import { ShrineCalculator } from './calculator/ShrineCalculator.js';
 import { InputValidator } from './ui/InputValidator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
+import { formatNumberWithUnitAndCommas } from './utils/NumberFormatter.js';
 
 // shrineData.json 로딩 함수
 async function loadShrineData() {
@@ -45,7 +46,6 @@ export function loadShrinePage(container) {
     <div id="shrineResult"></div>
   `;
 
-  // ✅ 신단별 최고 레벨
   const shrineMaxLevels = {
     growth: 215,
     abundance: 190,
@@ -89,7 +89,7 @@ export function loadShrinePage(container) {
 
     const calc = new ShrineCalculator(currentLevel, targetLevel, shrineType, shrineData);
     const result = calc.calculate();
-
-    ResultDisplayer.show('shrineResult', `필요한 호박석: ${result.toLocaleString()}개`);
+    const formatted = formatNumberWithUnitAndCommas(result);
+    ResultDisplayer.show('shrineResult', `필요한 호박석: ${formatted}개`);
   });
 }
