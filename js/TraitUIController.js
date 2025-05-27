@@ -2,6 +2,9 @@ import { TraitCalculator } from './calculator/TraitCalculator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { InputValidator } from './ui/InputValidator.js';
 
+const STORAGE_KEY = 'traitInputs';
+
+// 특성 목록 정의
 const traitList = [
   { key: 'autoFish', name: '자동낚시', max: 6 },
   { key: 'holder', name: '낚시게이지 홀더', max: 2 },
@@ -21,9 +24,11 @@ const traitList = [
 export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
+  // JSON 데이터 로드
   const response = await fetch('/js/data/trait_levels.json');
   const traitData = await response.json();
 
+  // 레이아웃 구성
   const layout = document.createElement('div');
   layout.id = 'trait-layout';
   layout.style.display = 'flex';
@@ -45,6 +50,7 @@ export async function loadTraitPage(container) {
   result.style.whiteSpace = 'nowrap';
   result.style.width = '450px';
 
+  // 입력 필드 렌더링
   traitList.forEach(trait => {
     form.innerHTML += `
       <div class="input-group horizontal">
@@ -59,19 +65,35 @@ export async function loadTraitPage(container) {
   layout.appendChild(result);
   container.appendChild(layout);
 
+  // 저장된 값 복원
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (saved) {
+    for (const trait of traitList) {
+      const input = document.getElementById(`trait_${trait.key}`);
+      if (saved[trait.key] !== undefined) {
+        input.value = saved[trait.key];
+      }
+    }
+  }
+
+  // 계산 버튼 이벤트
   document.getElementById('calculateTrait').addEventListener('click', () => {
     const inputLevels = {};
 
+    // 입력값 수집 및 유효성 검사
     for (const trait of traitList) {
       const input = document.getElementById(`trait_${trait.key}`);
       const value = parseInt(input.value) || 0;
 
-      // 유효성 검사
       if (!InputValidator.isValidLevel(value, 0, trait.max, trait.name)) return;
 
       inputLevels[trait.key] = value;
     }
 
+    // 입력값 저장
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(inputLevels));
+
+    //  계산 및 결과 표시
     const calculator = new TraitCalculator(inputLevels, traitData);
     const each = calculator.calculateEach();
     const total = calculator.calculateTotal();
