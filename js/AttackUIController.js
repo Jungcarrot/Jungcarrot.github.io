@@ -27,32 +27,32 @@ export class AttackUIController {
       </div>
       <div class="input-group">
         <label>낚싯대 레벨 / 스킨(%):</label>
-        <input type="number" id="rodLevel" min="1" max="4181"> / 
-        <input type="number" id="rodSkin" min="0" max="20">
+        <input type="number" id="rodLevel" min="1" max="4181" placeholder="1~4181"> / 
+        <input type="number" id="rodSkin" min="0" max="20" placeholder="0~20">
       </div>
       <div class="input-group">
         <label>작살포탑 레벨 / 스킨(%):</label>
-        <input type="number" id="harpoonLevel" min="1" max="4181"> / 
-        <input type="number" id="harpoonSkin" min="0" max="20">
+        <input type="number" id="harpoonLevel" min="1" max="4181" placeholder="1~4181"> / 
+        <input type="number" id="harpoonSkin" min="0" max="20" placeholder="0~20">
       </div>
       <div class="input-group">
         <label>대포 레벨 / 스킨(%):</label>
-        <input type="number" id="cannonLevel" min="1" max="4181"> / 
-        <input type="number" id="cannonSkin" min="0" max="20">
+        <input type="number" id="cannonLevel" min="1" max="4181" placeholder="1~4181"> / 
+        <input type="number" id="cannonSkin" min="0" max="20" placeholder="0~20">
       </div>
       <div class="input-group">
         <label>기관포탑 레벨 / 스킨(%):</label>
-        <input type="number" id="machineLevel" min="1" max="4181"> / 
-        <input type="number" id="machineSkin" min="0" max="20">
+        <input type="number" id="machineLevel" min="1" max="4181" placeholder="1~4181"> / 
+        <input type="number" id="machineSkin" min="0" max="20" placeholder="0~20">
       </div>
       <div class="input-group">
         <label>마법석 레벨 / 스킨(%):</label>
-        <input type="number" id="magicLevel" min="1" max="4181"> / 
-        <input type="number" id="magicSkin" min="0" max="20">
+        <input type="number" id="magicLevel" min="1" max="4181" placeholder="1~4181"> / 
+        <input type="number" id="magicSkin" min="0" max="20" placeholder="0~20">
       </div>
       <div class="input-group">
         <label>의지의 신단 레벨 (0~255):</label>
-        <input type="number" id="willShrineLevel" min="0" max="255">
+        <input type="number" id="willShrineLevel" min="0" max="255" placeholder="0~255">
       </div>
       <button class="calculate" id="calculateAttack">계산하기</button>
       <div id="attackResult"></div>
@@ -75,13 +75,11 @@ export class AttackUIController {
       magic: 'magicSkin',
     });
 
-    // 값 복원
     const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
     if (saved) {
       document.getElementById('charLevel').value = saved.charLevel || '';
       document.getElementById('petLevel').value = saved.petLevel || '';
       document.getElementById('willShrineLevel').value = saved.shrineLevel || '';
-
       for (const key in saved.weaponLevels) {
         document.getElementById(`${key}Level`).value = saved.weaponLevels[key] || '';
       }
@@ -100,7 +98,6 @@ export class AttackUIController {
       if (!InputValidator.isValidLevel(clv, 1, 4181, '캐릭터 레벨')) return;
       if (!InputValidator.isValidLevel(plv, 0, 4177, '펫 레벨')) return;
       if (!InputValidator.isValidLevel(shrineLevel, 0, 255, '의지의 신단 레벨')) return;
-
       for (const key in wlv) {
         if (!InputValidator.isValidLevel(wlv[key], 1, 4181, `${key} 레벨`)) return;
       }
@@ -108,7 +105,6 @@ export class AttackUIController {
         if (!InputValidator.isValidLevel(sbf[key], 0, 20, `${key} 스킨`)) return;
       }
 
-      // 입력값 저장
       const inputData = {
         charLevel: clv,
         petLevel: plv,
@@ -118,12 +114,10 @@ export class AttackUIController {
       };
       localStorage.setItem(STORAGE_KEY, JSON.stringify(inputData));
 
-      // 계산
       const calc = new AttackCalculator(clv, plv, wlv, sbf, shrineLevel);
       const raw = calc.calculateRaw();
       const formatted = formatNumber(raw);
       const commaSeparated = formatWithCommas(raw);
-
       ResultDisplayer.show('attackResult', `총 공격력: ${formatted} (${commaSeparated})`);
     });
   }
