@@ -3,14 +3,14 @@ import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { FarmCalculator } from './calculator/FarmCalculator.js';
 import { FarmLevelInputHandler } from './input/FarmLevelInputHandler.js';
 
+const STORAGE_KEY = 'farmInputs';
+
 export async function loadFarmPage(container) {
   container.innerHTML = `<h2>농장 스킨 레벨 계산기</h2>`;
 
-  // JSON 데이터 로드
   const response = await fetch('/js/data/farm_materials.json');
   const materialData = await response.json();
 
-  // 상위 카테고리 & 하위 스킨 정의
   const categoryOptions = ['건물', '마당', '계단', '통발', '기타'];
   const skinOptions = {
     건물: ['움막', '포장마차', '석조하우스', '해상 카페', '마녀의 집', '스팀하우스'],
@@ -37,29 +37,43 @@ export async function loadFarmPage(container) {
     </div>
     <div class="input-group">
       <label>현재 스킨 레벨 (0~9):</label>
-      <input type="number" id="farmCurrentLevel" min="0" max="9">
+      <input type="number" id="farmCurrentLevel" min="0" max="9" placeholder="0~9">
     </div>
     <div class="input-group">
       <label>목표 스킨 레벨 (0~9):</label>
-      <input type="number" id="farmTargetLevel" min="0" max="9">
+      <input type="number" id="farmTargetLevel" min="0" max="9" placeholder="0~9">
     </div>
 
     <button class="calculate" id="calculateFarm">계산하기</button>
     <div id="farmResult" style="margin-top: 1rem;"></div>
   `;
 
-  // 스킨 종류 변경 시 하위 스킨 갱신
-  document.getElementById('farmCategory').addEventListener('change', (e) => {
+  const categorySelect = document.getElementById('farmCategory');
+  const skinSelect = document.getElementById('farmSkin');
+  const currentInput = document.getElementById('farmCurrentLevel');
+  const targetInput = document.getElementById('farmTargetLevel');
+
+  categorySelect.addEventListener('change', (e) => {
     const selected = e.target.value;
-    const skinSelect = document.getElementById('farmSkin');
     skinSelect.innerHTML = skinOptions[selected].map(skin => `<option value="${skin}">${skin}</option>`).join('');
   });
 
+  //저장된 값 복원
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (saved) {
+    categorySelect.value = saved.category;
+    skinSelect.innerHTML = skinOptions[saved.category]
+      .map(skin => `<option value="${skin}" ${skin === saved.skin ? 'selected' : ''}>${skin}</option>`)
+      .join('');
+    currentInput.value = saved.current;
+    targetInput.value = saved.target;
+  }
+
   document.getElementById('calculateFarm').addEventListener('click', () => {
-    const current = parseInt(document.getElementById('farmCurrentLevel').value);
-    const target = parseInt(document.getElementById('farmTargetLevel').value);
-    const category = document.getElementById('farmCategory').value;
-    const skin = document.getElementById('farmSkin').value;
+    const current = parseInt(currentInput.value);
+    const target = parseInt(targetInput.value);
+    const category = categorySelect.value;
+    const skin = skinSelect.value;
 
     if (!InputValidator.isValidLevel(current, 0, 9, '현재 레벨')) return;
     if (!InputValidator.isValidLevel(target, 0, 9, '목표 레벨')) return;
@@ -68,8 +82,12 @@ export async function loadFarmPage(container) {
       return;
     }
 
+    //입력값 저장
+    const inputData = { current, target, category, skin };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(inputData));
+
     const calc = new FarmCalculator(current, target, category, skin, materialData);
-    const result = calc.calculate(); // { 나무판자: 20, 흑요석: 5 }
+    const result = calc.calculate();
 
     let resultText = `${category} > ${skin}<br>필요한 재료:<br>`;
     for (const [material, amount] of Object.entries(result)) {
