@@ -50,43 +50,38 @@ export async function loadFarmPage(container) {
 
   const categorySelect = document.getElementById('farmCategory');
   const skinSelect = document.getElementById('farmSkin');
-  const currentInput = document.getElementById('farmCurrentLevel');
-  const targetInput = document.getElementById('farmTargetLevel');
 
   categorySelect.addEventListener('change', (e) => {
     const selected = e.target.value;
     skinSelect.innerHTML = skinOptions[selected].map(skin => `<option value="${skin}">${skin}</option>`).join('');
   });
 
-  //저장된 값 복원
+  // 저장된 값 복원
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (saved) {
     categorySelect.value = saved.category;
     skinSelect.innerHTML = skinOptions[saved.category]
       .map(skin => `<option value="${skin}" ${skin === saved.skin ? 'selected' : ''}>${skin}</option>`)
       .join('');
-    currentInput.value = saved.current;
-    targetInput.value = saved.target;
+    document.getElementById('farmCurrentLevel').value = saved.current;
+    document.getElementById('farmTargetLevel').value = saved.target;
   }
 
   document.getElementById('calculateFarm').addEventListener('click', () => {
-    const current = parseInt(currentInput.value);
-    const target = parseInt(targetInput.value);
-    const category = categorySelect.value;
-    const skin = skinSelect.value;
+    const handler = new FarmLevelInputHandler('farmCategory', 'farmSkin', 'farmCurrentLevel', 'farmTargetLevel');
+    const { category, skin, currentLevel, targetLevel } = handler.getInput();
 
-    if (!InputValidator.isValidLevel(current, 0, 9, '현재 레벨')) return;
-    if (!InputValidator.isValidLevel(target, 0, 9, '목표 레벨')) return;
-    if (target <= current) {
+    if (!InputValidator.isValidLevel(currentLevel, 0, 9, '현재 레벨')) return;
+    if (!InputValidator.isValidLevel(targetLevel, 0, 9, '목표 레벨')) return;
+    if (targetLevel <= currentLevel) {
       alert('목표 레벨은 현재 레벨보다 높아야 합니다.');
       return;
     }
 
-    //입력값 저장
-    const inputData = { current, target, category, skin };
+    const inputData = { current: currentLevel, target: targetLevel, category, skin };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(inputData));
 
-    const calc = new FarmCalculator(current, target, category, skin, materialData);
+    const calc = new FarmCalculator(currentLevel, targetLevel, category, skin, materialData);
     const result = calc.calculate();
 
     let resultText = `${category} > ${skin}<br>필요한 재료:<br>`;
