@@ -61,10 +61,10 @@ export async function loadFarmPage(container) {
     const category = document.getElementById('farmCategory').value;
     const skin = document.getElementById('farmSkin').value;
 
-    if (!InputValidator.isValidLevel(current, 0, 9)) return;
-    if (!InputValidator.isValidLevel(target, 0, 9)) return;
+    if (!InputValidator.isValidLevel(current, 0, 9, '현재 레벨')) return;
+    if (!InputValidator.isValidLevel(target, 0, 9, '목표 레벨')) return;
     if (target <= current) {
-      alert("목표 레벨은 현재 레벨보다 높아야 합니다.");
+      alert('목표 레벨은 현재 레벨보다 높아야 합니다.');
       return;
     }
 
