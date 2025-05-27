@@ -4,7 +4,9 @@ import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 import { formatNumberWithUnitAndCommas } from './utils/NumberFormatter.js';
 
-// shrineData.json 로딩 함수
+const STORAGE_KEY = 'shrineInputs';
+
+
 async function loadShrineData() {
   try {
     const response = await fetch('./js/data/shrineData.json');
@@ -61,7 +63,6 @@ export function loadShrinePage(container) {
   function updateMaxLevel() {
     const selected = shrineTypeSelect.value;
     const max = shrineMaxLevels[selected] || 255;
-
     currentInput.max = max;
     targetInput.max = max;
     currentInput.placeholder = `0~${max}`;
@@ -69,6 +70,15 @@ export function loadShrinePage(container) {
   }
 
   shrineTypeSelect.addEventListener('change', updateMaxLevel);
+
+  // 저장된 값 복원
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if (saved) {
+    shrineTypeSelect.value = saved.type;
+    currentInput.value = saved.current;
+    targetInput.value = saved.target;
+  }
+
   updateMaxLevel();
 
   document.getElementById('calculateShrine').addEventListener('click', async () => {
@@ -83,6 +93,14 @@ export function loadShrinePage(container) {
       alert('목표 레벨은 현재 레벨보다 높아야 합니다.');
       return;
     }
+
+    // 입력값 저장
+    const inputData = {
+      type: shrineType,
+      current: currentLevel,
+      target: targetLevel
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(inputData));
 
     const shrineData = await loadShrineData();
     if (!shrineData) return;
