@@ -4,7 +4,7 @@ import { ShrineCalculator } from './calculator/ShrineCalculator.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 
 async function loadShrineData() {
-  const response = await fetch('./data/shrineData.json');
+  const response = await fetch('./js/data/shrineData.json');
   return await response.json();
 }
 
