@@ -2,12 +2,12 @@ import { TraitCalculator } from './calculator/TraitCalculator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
 
 const traitList = [
-  { key: 'autoFishing', name: '자동낚시', max: 6 },
+  { key: 'autoFish', name: '자동낚시', max: 6 },
   { key: 'holder', name: '낚시게이지 홀더', max: 2 },
-  { key: 'Overlapping', name: '고물중첩', max: 14 },
+  { key: 'Stack', name: '고물중첩', max: 14 },
   { key: 'combo', name: '콤보강화', max: 10 },
   { key: 'detector', name: '탐지기강화', max: 10 },
-  { key: 'storage', name: '보관함증가', max: 14 },
+  { key: 'Inventory', name: '보관함증가', max: 14 },
   { key: 'Auto', name: '자동항해', max: 5 },
   { key: 'Teleport', name: '순간이동', max: 10 },
   { key: 'FishingSpeed', name: '스킬강화 낚시속도', max: 10 },
@@ -28,7 +28,7 @@ export async function loadTraitPage(container) {
   const layout = document.createElement('div');
   layout.id = 'trait-layout';
   layout.style.display = 'flex';
-  layout.style.flexDirection = 'column'; // ✅ 초기 상태: 수직 정렬
+  layout.style.flexDirection = 'column';
   layout.style.alignItems = 'center';
   layout.style.justifyContent = 'center';
   layout.style.gap = '2rem';
@@ -42,7 +42,7 @@ export async function loadTraitPage(container) {
   // 결과창
   const result = document.createElement('div');
   result.id = 'traitResult';
-  result.style.display = 'none'; // ✅ 처음엔 숨김
+  result.style.display = 'none';
   result.style.flex = '1';
   result.style.textAlign = 'left';
   result.style.whiteSpace = 'nowrap';
@@ -77,13 +77,13 @@ export async function loadTraitPage(container) {
     const each = calculator.calculateEach();
     const total = calculator.calculateTotal();
 
-    // ✅ 레이아웃을 좌우 배치로 전환
+    // 레이아웃을 좌우 배치로 전환
     const layout = document.getElementById('trait-layout');
     layout.style.flexDirection = 'row';
     layout.style.alignItems = 'flex-start';
     layout.style.justifyContent = 'center';
 
-    // ✅ 결과창 표시
+    // 결과창 표시
     const resultArea = document.getElementById('traitResult');
     resultArea.style.display = 'block';
     resultArea.innerHTML = '';
