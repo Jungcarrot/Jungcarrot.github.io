@@ -3,6 +3,11 @@ import { ResultDisplayer } from './ui/ResultDisplayer.js';
 import { ShrineCalculator } from './calculator/ShrineCalculator.js';
 import { ShrineInputHandler } from './input/ShrineInputHandler.js';
 
+async function loadShrineData() {
+  const response = await fetch('./data/shrineData.json');
+  return await response.json();
+}
+
 export function loadShrinePage(container) {
   container.innerHTML = `
     <h2>신단 레벨 계산기</h2>
@@ -30,12 +35,11 @@ export function loadShrinePage(container) {
     <div id="shrineResult"></div>
   `;
 
-  document.getElementById('calculateShrine').addEventListener('click', () => {
+  document.getElementById('calculateShrine').addEventListener('click', async () => {
     const handler = new ShrineInputHandler('shrineType', 'shrineCurrentLevel', 'shrineTargetLevel');
     const { shrineType, currentLevel, targetLevel } = handler.getInput();
 
     const max = ShrineInputHandler.getMaxLevel(shrineType);
-
     if (!InputValidator.isValidLevel(currentLevel, 0, max)) return;
     if (!InputValidator.isValidLevel(targetLevel, 1, max)) return;
     if (targetLevel <= currentLevel) {
@@ -43,7 +47,8 @@ export function loadShrinePage(container) {
       return;
     }
 
-    const calc = new ShrineCalculator(currentLevel, targetLevel);
+    const shrineData = await loadShrineData();
+    const calc = new ShrineCalculator(currentLevel, targetLevel, shrineType, shrineData);
     const result = calc.calculate();
 
     ResultDisplayer.show('shrineResult', `필요한 호박석: ${result}개`);
