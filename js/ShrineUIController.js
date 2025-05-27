@@ -6,7 +6,7 @@ import { formatNumberWithUnitAndCommas } from './utils/NumberFormatter.js';
 
 const STORAGE_KEY = 'shrineInputs';
 
-
+// 신단 데이터 로드 함수
 async function loadShrineData() {
   try {
     const response = await fetch('./js/data/shrineData.json');
@@ -21,7 +21,9 @@ async function loadShrineData() {
   }
 }
 
+// 신단 페이지 로딩 함수
 export function loadShrinePage(container) {
+  // UI 초기 렌더링
   container.innerHTML = `
     <h2>신단 레벨 계산기</h2>
 
@@ -48,6 +50,7 @@ export function loadShrinePage(container) {
     <div id="shrineResult"></div>
   `;
 
+  // 신단 최대 레벨 정보 정의
   const shrineMaxLevels = {
     growth: 215,
     abundance: 190,
@@ -56,10 +59,12 @@ export function loadShrinePage(container) {
     will: 255
   };
 
+  // 요소 가져오기
   const shrineTypeSelect = document.getElementById('shrineType');
   const currentInput = document.getElementById('shrineCurrentLevel');
   const targetInput = document.getElementById('shrineTargetLevel');
 
+  // 신단 타입 변경 시 최대 입력값 갱신
   function updateMaxLevel() {
     const selected = shrineTypeSelect.value;
     const max = shrineMaxLevels[selected] || 255;
@@ -71,7 +76,7 @@ export function loadShrinePage(container) {
 
   shrineTypeSelect.addEventListener('change', updateMaxLevel);
 
-  // 저장된 값 복원
+  // 저장된 입력값 복원
   const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
   if (saved) {
     shrineTypeSelect.value = saved.type;
@@ -81,12 +86,14 @@ export function loadShrinePage(container) {
 
   updateMaxLevel();
 
+  // 계산 버튼 클릭 이벤트
   document.getElementById('calculateShrine').addEventListener('click', async () => {
     const handler = new ShrineInputHandler('shrineType', 'shrineCurrentLevel', 'shrineTargetLevel');
     const { shrineType, currentLevel, targetLevel } = handler.getInput();
 
     const max = shrineMaxLevels[shrineType] || 255;
 
+    // 입력값 유효성 검사
     if (!InputValidator.isValidLevel(currentLevel, 0, max, '현재 레벨')) return;
     if (!InputValidator.isValidLevel(targetLevel, 1, max, '목표 레벨')) return;
     if (targetLevel <= currentLevel) {
@@ -102,6 +109,7 @@ export function loadShrinePage(container) {
     };
     localStorage.setItem(STORAGE_KEY, JSON.stringify(inputData));
 
+    // 데이터 로드 후 계산 실행
     const shrineData = await loadShrineData();
     if (!shrineData) return;
 
