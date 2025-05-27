@@ -18,31 +18,31 @@ export class AttackUIController {
       <h2>공격력 계산기</h2>
       <div class="input-group">
         <label>캐릭터 레벨:</label>
-        <input type="number" id="charLevel" min="1" max="4181">
+        <input type="number" id="charLevel" min="1" max="4181" placeorder="1~4181">
       </div>
       <div class="input-group">
         <label>펫 레벨:</label>
-        <input type="number" id="petLevel" min="0" max="4177">
+        <input type="number" id="petLevel" min="0" max="4177" placeorder="1~4177">
       </div>
       <div class="input-group">
         <label>낚싯대 레벨 / 스킨(%):</label>
-        <input type="number" id="rodLevel"> / <input type="number" id="rodSkin">
+        <input type="number" id="rodLevel" min="1" max="4181" placeorder="1~4181"> / <input type="number" id="rodSkin" min="0" max="20" placeorder="0~20">
       </div>
       <div class="input-group">
         <label>작살포탑 레벨 / 스킨(%):</label>
-        <input type="number" id="harpoonLevel"> / <input type="number" id="harpoonSkin">
+        <input type="number" id="harpoonLevel" min="1" max="4181" placeorder="1~4181"> / <input type="number" id="harpoonSkin" min="0" max="20" placeorder="0~20">
       </div>
       <div class="input-group">
         <label>대포 레벨 / 스킨(%):</label>
-        <input type="number" id="cannonLevel"> / <input type="number" id="cannonSkin">
+        <input type="number" id="cannonLevel" min="1" max="4181" placeorder="1~4181"> / <input type="number" id="cannonSkin min="0" max="20" placeorder="0~20"">
       </div>
       <div class="input-group">
         <label>기관포탑 레벨 / 스킨(%):</label>
-        <input type="number" id="machineLevel"> / <input type="number" id="machineSkin">
+        <input type="number" id="machineLevel" min="1" max="4181" placeorder="1~4181"> / <input type="number" id="machineSkin" min="0" max="20" placeorder="0~20">
       </div>
       <div class="input-group">
         <label>마법석 레벨 / 스킨(%):</label>
-        <input type="number" id="magicLevel"> / <input type="number" id="magicSkin">
+        <input type="number" id="magicLevel" min="1" max="4181" placeorder="1~4181"> / <input type="number" id="magicSkin" min="0" max="20" placeorder="0~20">
       </div>
       <div class="input-group">
         <label>의지의 신단 레벨 (0~255):</label>
