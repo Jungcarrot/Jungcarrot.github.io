@@ -1,5 +1,6 @@
 import { TraitCalculator } from './calculator/TraitCalculator.js';
 import { ResultDisplayer } from './ui/ResultDisplayer.js';
+import { InputValidator } from './ui/InputValidator.js';
 
 const traitList = [
   { key: 'autoFish', name: '자동낚시', max: 6 },
@@ -20,11 +21,9 @@ const traitList = [
 export async function loadTraitPage(container) {
   container.innerHTML = `<h2>특성 포인트 계산기</h2>`;
 
-  // JSON 불러오기
   const response = await fetch('/js/data/trait_levels.json');
   const traitData = await response.json();
 
-  // 전체 레이아웃
   const layout = document.createElement('div');
   layout.id = 'trait-layout';
   layout.style.display = 'flex';
@@ -33,13 +32,11 @@ export async function loadTraitPage(container) {
   layout.style.justifyContent = 'center';
   layout.style.gap = '2rem';
 
-  // 입력폼
   const form = document.createElement('div');
   form.style.display = 'flex';
   form.style.flexDirection = 'column';
   form.style.alignItems = 'center';
 
-  // 결과창
   const result = document.createElement('div');
   result.id = 'traitResult';
   result.style.display = 'none';
@@ -48,7 +45,6 @@ export async function loadTraitPage(container) {
   result.style.whiteSpace = 'nowrap';
   result.style.width = '450px';
 
-  // 입력 필드
   traitList.forEach(trait => {
     form.innerHTML += `
       <div class="input-group horizontal">
@@ -63,27 +59,28 @@ export async function loadTraitPage(container) {
   layout.appendChild(result);
   container.appendChild(layout);
 
-  // 계산 버튼 클릭 이벤트
   document.getElementById('calculateTrait').addEventListener('click', () => {
     const inputLevels = {};
 
-    traitList.forEach(trait => {
+    for (const trait of traitList) {
       const input = document.getElementById(`trait_${trait.key}`);
-      const level = Math.min(parseInt(input.value) || 0, trait.max);
-      inputLevels[trait.key] = level;
-    });
+      const value = parseInt(input.value) || 0;
+
+      // 유효성 검사
+      if (!InputValidator.isValidLevel(value, 0, trait.max, trait.name)) return;
+
+      inputLevels[trait.key] = value;
+    }
 
     const calculator = new TraitCalculator(inputLevels, traitData);
     const each = calculator.calculateEach();
     const total = calculator.calculateTotal();
 
-    // 레이아웃을 좌우 배치로 전환
     const layout = document.getElementById('trait-layout');
     layout.style.flexDirection = 'row';
     layout.style.alignItems = 'flex-start';
     layout.style.justifyContent = 'center';
 
-    // 결과창 표시
     const resultArea = document.getElementById('traitResult');
     resultArea.style.display = 'block';
     resultArea.innerHTML = '';
@@ -97,4 +94,3 @@ export async function loadTraitPage(container) {
     resultArea.innerHTML += `<hr><div><strong>총 필요 포인트: ${total.toLocaleString()}</strong></div>`;
   });
 }
-
