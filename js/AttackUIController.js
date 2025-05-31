@@ -33,22 +33,22 @@ export class AttackUIController {
       <div class="input-group">
         <label>작살포탑 레벨 / 스킨(%):</label>
         <input type="number" id="harpoonLevel" min="1" max="4181" placeholder="1~4181"> / 
-        <input type="number" id="harpoonSkin" min="0" max="20" placeholder="0~20">
+        <input type="number" id="harpoonSkin" min="0" max="15" placeholder="0~15">
       </div>
       <div class="input-group">
         <label>대포 레벨 / 스킨(%):</label>
         <input type="number" id="cannonLevel" min="1" max="4181" placeholder="1~4181"> / 
-        <input type="number" id="cannonSkin" min="0" max="20" placeholder="0~20">
+        <input type="number" id="cannonSkin" min="0" max="15" placeholder="0~15">
       </div>
       <div class="input-group">
         <label>기관포탑 레벨 / 스킨(%):</label>
         <input type="number" id="machineLevel" min="1" max="4181" placeholder="1~4181"> / 
-        <input type="number" id="machineSkin" min="0" max="20" placeholder="0~20">
+        <input type="number" id="machineSkin" min="0" max="15" placeholder="0~15">
       </div>
       <div class="input-group">
         <label>마법석 레벨 / 스킨(%):</label>
         <input type="number" id="magicLevel" min="1" max="4181" placeholder="1~4181"> / 
-        <input type="number" id="magicSkin" min="0" max="20" placeholder="0~20">
+        <input type="number" id="magicSkin" min="0" max="15" placeholder="0~15">
       </div>
       <div class="input-group">
         <label>의지의 신단 레벨 (0~255):</label>
