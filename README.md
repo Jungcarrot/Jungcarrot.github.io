@@ -1,2 +1,0 @@
-# SoftWare
-Jungcarrot.github.io
